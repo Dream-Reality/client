@@ -33,6 +33,7 @@ class GetGameInfoResponseDTO:public oatpp::DTO{
     DTO_FIELD(Int64, next_game_start_time);
     DTO_FIELD(Int32, next_game_running_days);
     DTO_FIELD(Int32, next_game_running_time);
+    DTO_FIELD(Float64, next_game_time_ratio);
     DTO_FIELD(String, status);
 };
 
@@ -102,20 +103,92 @@ class GetLimitOrderBookResponseDTO:public oatpp::DTO{
 };
 class GetInstrumentInfoDTO:public oatpp::DTO{
     DTO_INIT(GetInstrumentInfoDTO, DTO);
+
     DTO_FIELD(String, token_ub);
 };
 
 class InstrumentDTO:public oatpp::DTO{
     DTO_INIT(InstrumentDTO, DTO);
+    
     DTO_FIELD(Int32, id);
     DTO_FIELD(String, instrument_name);
 };
 
 class GetInstrumentInfoResponseDTO:public oatpp::DTO{
     DTO_INIT(GetInstrumentInfoResponseDTO, DTO);
+    
     DTO_FIELD(String, response_type);
     DTO_FIELD(Int32, instrument_number);
     DTO_FIELD(List<Object<InstrumentDTO>>, instruments);
+    DTO_FIELD(String, status);
+};
+
+class ColumnDTO:public oatpp::DTO{
+    DTO_INIT(ColumnDTO, DTO);
+
+    DTO_FIELD(String, title);
+    DTO_FIELD(String, dataIndex);
+};
+class PrivateRowDTO:public oatpp::DTO{
+    DTO_INIT(PrivateRowDTO, DTO);
+
+    DTO_FIELD(String, instrument_name);
+    DTO_FIELD(Int32, share_holding);
+    DTO_FIELD(Float64, position);
+    DTO_FIELD(Float64, pnl);
+    DTO_FIELD(Int32, orders);
+    DTO_FIELD(Int32, error_orders);
+    DTO_FIELD(Float64, order_value);
+    DTO_FIELD(Float64, trade_value);
+    DTO_FIELD(Float64, commision);
+};
+class GetPrivateInfoDTO:public oatpp::DTO{
+    DTO_INIT(GetPrivateInfoDTO, DTO);
+    
+    DTO_FIELD(String, token_ub);
+};
+class GetPrivateInfoResponseDTO:public oatpp::DTO{
+    DTO_INIT(GetPrivateInfoResponseDTO, DTO);
+
+    DTO_FIELD(String, response_type);
+    DTO_FIELD(Int32, day);
+    DTO_FIELD(String, team_name);
+    DTO_FIELD(Float64, pnl);
+    DTO_FIELD(Float64, sharpe);
+    DTO_FIELD(Int32, orders);
+    DTO_FIELD(Int32, error_orders);
+    DTO_FIELD(Float64, order_value);
+    DTO_FIELD(Float64, trade_value);
+    DTO_FIELD(Float64, commision);
+    DTO_FIELD(Float64, total_position);
+    DTO_FIELD(Float64, remain_funds);
+
+    DTO_FIELD(List<Float64>, pnl_list);
+    DTO_FIELD(List<Object<ColumnDTO>>, columns);
+    DTO_FIELD(List<Object<PrivateRowDTO>>, rows);
+    DTO_FIELD(String, status);
+};
+class PublicRowDTO:public oatpp::DTO{
+    DTO_INIT(PublicRowDTO, DTO);
+    DTO_FIELD(String, user_name);
+    DTO_FIELD(Float64, cur_pnl);
+    DTO_FIELD(Float64, acc_pnl);
+    DTO_FIELD(Float64, sharpe);
+    DTO_FIELD(Float64, score);
+    DTO_FIELD(Int32, ranking);
+};
+class GetPublicInfoDTO:public oatpp::DTO{
+    DTO_INIT(GetPublicInfoDTO, DTO);
+    DTO_FIELD(String, token_ub);
+};
+class GetPublicInfoResponseDTO:public oatpp::DTO{
+    DTO_INIT(GetPublicInfoResponseDTO, DTO);
+
+    DTO_FIELD(String, response_type);
+    DTO_FIELD(List<Object<ColumnDTO>>, columns);
+    DTO_FIELD(List<Object<PublicRowDTO>>, rows);
+    DTO_FIELD(List<String>, top_user_name);
+    DTO_FIELD(List<List<Float64>>, top_user_pnl);
     DTO_FIELD(String, status);
 };
 
