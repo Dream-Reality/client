@@ -13,7 +13,7 @@ namespace INTERFACE_SPACE{
     void init(){
         AppComponent components;
         std::shared_ptr<oatpp::parser::json::mapping::ObjectMapper> objectMapper_ = oatpp::parser::json::mapping::ObjectMapper::createShared();
-        std::shared_ptr<oatpp::network::tcp::client::ConnectionProvider> connectionProvider = oatpp::network::tcp::client::ConnectionProvider::createShared({"39.105.124.7", 30015});
+        std::shared_ptr<oatpp::network::tcp::client::ConnectionProvider> connectionProvider = oatpp::network::tcp::client::ConnectionProvider::createShared({"39.105.124.7", 30010});
         std::shared_ptr<oatpp::web::client::HttpRequestExecutor> requestExecutor = oatpp::web::client::HttpRequestExecutor::createShared(connectionProvider);
         client = oatpp::consul::rest::MessageClient::createShared(requestExecutor, objectMapper_);
         objectMapper = components.apiObjectMapper.getObject();
