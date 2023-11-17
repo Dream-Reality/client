@@ -39,15 +39,15 @@ void run() {
     auto bot = BOTS_SPACE::BotsDemoClass("UBIQ_USER", "123456");
     bot.login();
     bot.init();
-    for (int i = 0;i < 1; i++){
+    for (int i = 0;i < bot.running_days; i++){
         while (true){
-            auto t = UTIL_SPACE::ConvertToSimTime_us(bot.start_time, bot.running_time);
-            if (t > -30)break;
+            auto t = UTIL_SPACE::ConvertToSimTime_us(bot.start_time, bot.time_ratio, bot.day, bot.running_time);
+            if (t > -900)break;
         }
         bot.bod();
         for (double s = 0.; s < 14400; s += 1.){
             while (true){
-                auto t = UTIL_SPACE::ConvertToSimTime_us(bot.start_time, bot.running_time);
+                auto t = UTIL_SPACE::ConvertToSimTime_us(bot.start_time, bot.time_ratio, bot.day, bot.running_time);
                 if (t >= s){
                     break;
                 }
