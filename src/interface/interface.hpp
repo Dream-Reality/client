@@ -71,6 +71,14 @@ namespace INTERFACE_SPACE{
         auto response = client->sendGetLimitOrderBook(getlob)->readBodyToDto<oatpp::Object<DTO_SPACE::GetLimitOrderBookResponseDTO>>(objectMapper);
         return response;
     }
+    DTO_SPACE::GetPrivateInfoResponseDTO::Wrapper sendGetPrivateInfo(
+        std::string token_ub
+    ){
+        auto getprivateinfo = DTO_SPACE::GetPrivateInfoDTO::createShared();
+        getprivateinfo->token_ub = token_ub;
+        auto response = client->sendGetPrivateInfo(getprivateinfo)->readBodyToDto<oatpp::Object<DTO_SPACE::GetPrivateInfoResponseDTO>>(objectMapper);
+        return response;
+    }
     DTO_SPACE::GetGameInfoResponseDTO::Wrapper sendGetGameInfo(
         std::string token_ub
     ){
