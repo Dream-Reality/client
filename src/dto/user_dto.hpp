@@ -127,6 +127,7 @@ class ColumnDTO:public oatpp::DTO{
     DTO_INIT(ColumnDTO, DTO);
 
     DTO_FIELD(String, title);
+    DTO_FIELD(String, width);
     DTO_FIELD(String, dataIndex);
 };
 class PrivateRowDTO:public oatpp::DTO{
@@ -152,7 +153,7 @@ class GetPrivateInfoResponseDTO:public oatpp::DTO{
 
     DTO_FIELD(String, response_type);
     DTO_FIELD(Int32, day);
-    DTO_FIELD(String, team_name);
+    DTO_FIELD(String, teamname);
     DTO_FIELD(Float64, pnl);
     DTO_FIELD(Float64, sharpe);
     DTO_FIELD(Int32, orders);
@@ -167,6 +168,11 @@ class GetPrivateInfoResponseDTO:public oatpp::DTO{
     DTO_FIELD(List<Object<ColumnDTO>>, columns);
     DTO_FIELD(List<Object<PrivateRowDTO>>, rows);
     DTO_FIELD(String, status);
+};
+class PNLDTO:public oatpp::DTO{
+    DTO_INIT(PNLDTO, DTO);
+    DTO_FIELD(String, team);
+    DTO_FIELD(List<Float64>, data);
 };
 class PublicRowDTO:public oatpp::DTO{
     DTO_INIT(PublicRowDTO, DTO);
@@ -184,11 +190,11 @@ class GetPublicInfoDTO:public oatpp::DTO{
 class GetPublicInfoResponseDTO:public oatpp::DTO{
     DTO_INIT(GetPublicInfoResponseDTO, DTO);
 
+    DTO_FIELD(Int32, day);
     DTO_FIELD(String, response_type);
     DTO_FIELD(List<Object<ColumnDTO>>, columns);
     DTO_FIELD(List<Object<PublicRowDTO>>, rows);
-    DTO_FIELD(List<String>, top_user_name);
-    DTO_FIELD(List<List<Float64>>, top_user_pnl);
+    DTO_FIELD(List<Object<PNLDTO>>, top_user_pnl);
     DTO_FIELD(String, status);
 };
 
