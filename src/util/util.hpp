@@ -22,10 +22,9 @@ namespace UTIL_SPACE{
         auto result = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
         return result;
     }
-    double ConvertToSimTime_us(std::chrono::system_clock::time_point start_time, double running_time){
+    double ConvertToSimTime_us(std::chrono::system_clock::time_point start_time, double time_ratio, int day, int running_time){
         auto end_time = std::chrono::system_clock::now();
-        double rate = 14400. / running_time;
-        auto result = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() / 1000000. * rate;
+        auto result = (std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() / 1000000. - (day - 1) * running_time ) * time_ratio;
         return result;
     }
     std::chrono::system_clock::time_point ConvertToTimePoint_s(int year, int month, int day, int hour, int minute, int second){
