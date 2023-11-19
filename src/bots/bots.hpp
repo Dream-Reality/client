@@ -1,66 +1,75 @@
-
-#include "websocket/WSListener.hpp"
-
-#include "oatpp/parser/json/mapping/ObjectMapper.hpp"
-#include "oatpp-websocket/WebSocket.hpp"
-#include "oatpp-websocket/Connector.hpp"
-
-#include "oatpp/web/client/ApiClient.hpp"
-#include "oatpp/core/macro/codegen.hpp"
-#include "oatpp/network/tcp/client/ConnectionProvider.hpp"
-
+#include <cmath>
+#include <vector>
 #include <string>
-#include <thread>
-#include <chrono>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
 #include <iostream>
 
-#include "AppComponent.hpp"
-#include "util/util.hpp"
-#include "dto/user_dto.hpp"
 #include "interface/interface.hpp"
-#include "api_client/api_client.hpp"
-#include "bots/bots.hpp"
+namespace BOTS_SPACE{
+    class BotsClass{
+        public:
+        std::string username;
+        std::string password;
+        std::string token_ub;
+        std::chrono::system_clock::time_point start_time;
+        double running_time, time_ratio;
+        int running_days;
+        int day;
+        public:
+        BotsClass(
+            std::string username, 
+            std::string password
+        ):username(username),password(password){}
+        virtual void init() = 0;
+        virtual void bod() = 0;
+        virtual void work() = 0;
+        virtual void eod() = 0;
+        virtual void final() = 0;
+    };
+    class BotsDemoClass:public BotsClass{
+        public:
+        std::vector<std::string>instruments;
+        BotsDemoClass(
+            std::string username,
+            std::string password
+        ):BotsClass(username, password){
 
-namespace {
-    const char* TAG = "websocket-client";
-    bool finished = false;
-    void socketTask(const std::shared_ptr<oatpp::websocket::WebSocket>& websocket) {
-        websocket->listen();
-        OATPP_LOGD(TAG, "SOCKET CLOSED!!!");
-        finished = true;
-    }
-
-}
-
-void run() {
-    OATPP_LOGI(TAG, "Application Started");
-    INTERFACE_SPACE::init();
-    auto jsonObjectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
-    auto bot = BOTS_SPACE::BotsDemoClass("UBIQ_USER", "123456");
-    bot.login();
-    bot.init();
-    for (int i = 0;i < 1; i++){
-        while (true){
-            auto t = UTIL_SPACE::ConvertToSimTime_us(bot.start_time, bot.time_ratio, bot.day, bot.running_time);
-            if (t > -900)break;
         }
-        bot.bod();
-        for (double s = 0.; s < 14400; s += 1.){
-            while (true){
-                auto t = UTIL_SPACE::ConvertToSimTime_us(bot.start_time, bot.time_ratio, bot.day, bot.running_time);
-                if (t >= s){
-                    break;
-                }
-            }
-            bot.work();
+        void login(){
+            auto login_response = INTERFACE_SPACE::sendLogin(username, password);
+            LOG_REPONSE(login_response);
+            token_ub = login_response->token_ub;
         }
-        bot.eod();
-    }
-}
+        void init(){
+            auto getgameinfo_response = INTERFACE_SPACE::sendGetGameInfo(token_ub);
+            LOG_REPONSE(getgameinfo_response);
+            start_time = UTIL_SPACE::ConvertToTimePoint_s(getgameinfo_response->next_game_start_time);
+            running_days = getgameinfo_response->next_game_running_days;
+            running_time = getgameinfo_response->next_game_running_time;
+            time_ratio = getgameinfo_response->next_game_time_ratio;
+            auto getinstrumentinfo_response = INTERFACE_SPACE::sendGetInstrumentInfo(token_ub);
+            for (int i = 0;i < getinstrumentinfo_response->instruments->size(); i++)
+                instruments.push_back(getinstrumentinfo_response->instruments[i]->instrument_name);
+            LOG_REPONSE(getinstrumentinfo_response);
+        }
+        void bod(){
+            day++;
+        }
+        void work(){
+            //GETLimitOrderBook: INTERFACE_SPACE::sendGetLimitOrderBook(token_ub, "UBIQ001")
+            // INTERFACE_SPACE::sendOrder(token_ub, "UBIQ001", 0, "buy", 10.10, 1000);
+            //INTERFACE_SPACE::sendCancel(token_ub, "UBIQ001", index)
+            //INTERFACE_SPACE::sendGetTrade(token_ub);
+            //INTERFACE_SPACE::
+            //LOG_REPONSE(order_response);
+        }
+        void eod(){
 
-int main() {
-    oatpp::base::Environment::init();
-    run();
-    oatpp::base::Environment::destroy();
-    return 0;
+        }
+        void final(){
+
+        }
+    };
 }
