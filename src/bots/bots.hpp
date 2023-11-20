@@ -38,11 +38,13 @@ namespace BOTS_SPACE{
 
         }
         void login(){
+            /*登录选手个人信息账号,不需要修改。*/
             auto login_response = INTERFACE_SPACE::sendLogin(username, password);
             LOG_REPONSE(login_response);
             token_ub = login_response->token_ub;
         }
         void init(){
+            /*交易开始前初始化交易状态,不需要修改。*/
             auto getgameinfo_response = INTERFACE_SPACE::sendGetGameInfo(token_ub);
             LOG_REPONSE(getgameinfo_response);
             start_time = UTIL_SPACE::ConvertToTimePoint_s(getgameinfo_response->next_game_start_time);
@@ -55,20 +57,24 @@ namespace BOTS_SPACE{
             LOG_REPONSE(getinstrumentinfo_response);
         }
         void bod(){
-            day++;
+            /*Begin of Day.交易日开始时（程序开始执行时）,需要执行的个人操作。*/
+
         }
         void work(){
-            //GETLimitOrderBook: INTERFACE_SPACE::sendGetLimitOrderBook(token_ub, "UBIQ001")
-            // INTERFACE_SPACE::sendOrder(token_ub, "UBIQ001", 0, "buy", 10.10, 1000);
-            //INTERFACE_SPACE::sendCancel(token_ub, "UBIQ001", index)
-            //INTERFACE_SPACE::sendGetTrade(token_ub);
-            //INTERFACE_SPACE::
-            //LOG_REPONSE(order_response);
+            /*盘中交易实时调用的自动化交易策略,以下为一个autotrader demo。*/
+            auto LimitOrderBook = INTERFACE_SPACE::sendGetLimitOrderBook(token_ub, "UBIQ001"); // 获取当前UBIQ001的LOB行情。
+            // LOG_REPONSE(LimitOrderBook); // 将LOB输出。
+            double askprice_1 = LimitOrderBook->askprice[0]; // 获取当前最优ask报价
+            auto order_response = INTERFACE_SPACE::sendOrder(token_ub, "UBIQ001", 0, "buy", askprice_1, 100); // 用最优报价去买100单。
+            LOG_REPONSE(order_response); // 将订单信息输出。
+
         }
         void eod(){
+            /*End of Day.交易日结束时,需要执行的个人操作。*/
 
         }
         void final(){
+            /*所有交易日的交易结束后，选手可以自行统计一些数据。*/
 
         }
     };
