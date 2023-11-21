@@ -76,31 +76,37 @@ class CancelResponseDTO:public oatpp::DTO{
     DTO_FIELD(String, status);
 };
 
+class GetTradeDTO:public oatpp::DTO{
+    DTO_INIT(GetTradeDTO, DTO);
+    DTO_FIELD(String, token_ub);
+    DTO_FIELD(String, instrument_name);
+};
+class TradeDTO:public oatpp::DTO{
+    DTO_INIT(TradeDTO, DTO);
+
+    DTO_FIELD(String, Instrument);
+    DTO_FIELD(Float64, trade_time);
+    DTO_FIELD(Int32, trade_index);
+    DTO_FIELD(Int32, order_index);
+    DTO_FIELD(Float64, trade_price);
+    DTO_FIELD(Int32, trade_volume);
+    DTO_FIELD(Int32, remain_volume);
+};
+class GetTradeResponseDTO:public oatpp::DTO{
+    DTO_INIT(GetTradeResponseDTO, DTO);
+    
+    DTO_FIELD(String, response_type);
+    DTO_FIELD(List<Object<TradeDTO>>, trade_list);
+    DTO_FIELD(String, status);
+};
+
 class GetLimitOrderBookDTO:public oatpp::DTO{
     DTO_INIT(GetLimitOrderBookDTO, DTO);
     
     DTO_FIELD(String, token_ub);
     DTO_FIELD(String, instrument);
 };
-class GetLimitOrderBookResponseDTO:public oatpp::DTO{
-    DTO_INIT(GetLimitOrderBookResponseDTO, DTO);
 
-    DTO_FIELD(String, response_type);
-    DTO_FIELD(String, instrument);
-    DTO_FIELD(Int64, localtime);
-    DTO_FIELD(Float64, limit_up_price);
-    DTO_FIELD(Float64, limit_down_price);
-    DTO_FIELD(List<Float64>, bidprice);
-    DTO_FIELD(List<Float64>, askprice);
-    DTO_FIELD(List<Int32>, bidvolume);
-    DTO_FIELD(List<Int32>, askvolume);
-    DTO_FIELD(List<Int32>, lobprice);
-    DTO_FIELD(Int32, history_count);
-    DTO_FIELD(List<Int32>, history_trade_volume);
-    DTO_FIELD(List<String>, history_time);
-    DTO_FIELD(List<Int32>, history_direction);
-    DTO_FIELD(String, status);
-};
 class GetInstrumentInfoDTO:public oatpp::DTO{
     DTO_INIT(GetInstrumentInfoDTO, DTO);
 
@@ -123,13 +129,6 @@ class GetInstrumentInfoResponseDTO:public oatpp::DTO{
     DTO_FIELD(String, status);
 };
 
-class ColumnDTO:public oatpp::DTO{
-    DTO_INIT(ColumnDTO, DTO);
-
-    DTO_FIELD(String, title);
-    DTO_FIELD(String, width);
-    DTO_FIELD(String, dataIndex);
-};
 class PrivateRowDTO:public oatpp::DTO{
     DTO_INIT(PrivateRowDTO, DTO);
 
@@ -169,32 +168,29 @@ class GetPrivateInfoResponseDTO:public oatpp::DTO{
     DTO_FIELD(List<Object<PrivateRowDTO>>, rows);
     DTO_FIELD(String, status);
 };
-class PNLDTO:public oatpp::DTO{
-    DTO_INIT(PNLDTO, DTO);
-    DTO_FIELD(String, team);
-    DTO_FIELD(List<Float64>, data);
-};
-class PublicRowDTO:public oatpp::DTO{
-    DTO_INIT(PublicRowDTO, DTO);
-    DTO_FIELD(String, user_name);
-    DTO_FIELD(Float64, cur_pnl);
-    DTO_FIELD(Float64, acc_pnl);
-    DTO_FIELD(Float64, sharpe);
-    DTO_FIELD(Float64, score);
-    DTO_FIELD(Int32, ranking);
-};
-class GetPublicInfoDTO:public oatpp::DTO{
-    DTO_INIT(GetPublicInfoDTO, DTO);
+
+class GetActiveOrderDTO:public oatpp::DTO{
+    DTO_INIT(GetActiveOrderDTO, DTO);
     DTO_FIELD(String, token_ub);
 };
-class GetPublicInfoResponseDTO:public oatpp::DTO{
-    DTO_INIT(GetPublicInfoResponseDTO, DTO);
+class ActiveOrderDTO:public oatpp::DTO{
+    DTO_INIT(ActiveOrderDTO, DTO);
+    
+    DTO_FIELD(Int32, order_index);
+    DTO_FIELD(Float64, order_price);
+    DTO_FIELD(Int32, volume);
+    DTO_FIELD(String, direction);
+};
+class ActiveOrdersDTO:public oatpp::DTO{
+    DTO_INIT(ActiveOrdersDTO, DTO);
 
-    DTO_FIELD(Int32, day);
+    DTO_FIELD(String, instrument_name);
+    DTO_FIELD(List<Object<ActiveOrderDTO>>, active_orders);
+};
+class GetActiveOrderResponseDTO:public oatpp::DTO{
+    DTO_INIT(GetActiveOrderResponseDTO, DTO);
     DTO_FIELD(String, response_type);
-    DTO_FIELD(List<Object<ColumnDTO>>, columns);
-    DTO_FIELD(List<Object<PublicRowDTO>>, rows);
-    DTO_FIELD(List<Object<PNLDTO>>, top_user_pnl);
+    DTO_FIELD(List<Object<ActiveOrdersDTO>>, instruments);
     DTO_FIELD(String, status);
 };
 
