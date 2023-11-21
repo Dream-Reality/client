@@ -128,7 +128,6 @@ class GetInstrumentInfoResponseDTO:public oatpp::DTO{
     DTO_FIELD(List<Object<InstrumentDTO>>, instruments);
     DTO_FIELD(String, status);
 };
-
 class PrivateRowDTO:public oatpp::DTO{
     DTO_INIT(PrivateRowDTO, DTO);
 
@@ -142,17 +141,15 @@ class PrivateRowDTO:public oatpp::DTO{
     DTO_FIELD(Float64, trade_value);
     DTO_FIELD(Float64, commision);
 };
-class GetPrivateInfoDTO:public oatpp::DTO{
-    DTO_INIT(GetPrivateInfoDTO, DTO);
-    
+class GetUserInfoDTO:public oatpp::DTO{
+    DTO_INIT(GetUserInfoDTO, DTO);
     DTO_FIELD(String, token_ub);
 };
-class GetPrivateInfoResponseDTO:public oatpp::DTO{
-    DTO_INIT(GetPrivateInfoResponseDTO, DTO);
+
+class GetUserInfoResponseDTO:public oatpp::DTO{
+    DTO_INIT(GetUserInfoResponseDTO, DTO);
 
     DTO_FIELD(String, response_type);
-    DTO_FIELD(Int32, day);
-    DTO_FIELD(String, teamname);
     DTO_FIELD(Float64, pnl);
     DTO_FIELD(Float64, sharpe);
     DTO_FIELD(Int32, orders);
@@ -162,13 +159,37 @@ class GetPrivateInfoResponseDTO:public oatpp::DTO{
     DTO_FIELD(Float64, commision);
     DTO_FIELD(Float64, total_position);
     DTO_FIELD(Float64, remain_funds);
-
-    DTO_FIELD(List<Float64>, pnl_list);
-    DTO_FIELD(List<Object<ColumnDTO>>, columns);
     DTO_FIELD(List<Object<PrivateRowDTO>>, rows);
     DTO_FIELD(String, status);
 };
+class GetLOBDTO:public oatpp::DTO{
+    DTO_INIT(GetLOBDTO, DTO);
+    DTO_FIELD(String, token_ub);
+    DTO_FIELD(String, instrument);
+};
+class LOBDTO:public oatpp::DTO{
+    DTO_INIT(LOBDTO, DTO);
 
+    DTO_FIELD(Int64, localtime);
+    DTO_FIELD(Float64, limit_up_price);
+    DTO_FIELD(Float64, limit_down_price);
+    DTO_FIELD(List<Float64>, bidprice);
+    DTO_FIELD(List<Float64>, askprice);
+    DTO_FIELD(List<Int32>, bidvolume);
+    DTO_FIELD(List<Int32>, askvolume);
+    DTO_FIELD(Float64, last_price);
+    DTO_FIELD(Int32, trade_volume);
+    DTO_FIELD(Float64, trade_value);
+};
+
+class GetLOBResponseDTO:public oatpp::DTO{
+    DTO_INIT(GetLOBResponseDTO, DTO);
+    
+    DTO_FIELD(String, response_type);
+    DTO_FIELD(String, instrument);
+    DTO_FIELD(Object<LOBDTO>, lob);
+    DTO_FIELD(String, status);
+};
 class GetActiveOrderDTO:public oatpp::DTO{
     DTO_INIT(GetActiveOrderDTO, DTO);
     DTO_FIELD(String, token_ub);
