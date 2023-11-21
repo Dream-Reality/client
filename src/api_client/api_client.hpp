@@ -20,7 +20,7 @@ namespace oatpp { namespace consul { namespace rest {
             API_CALL("POST", "TradeAPI/GetGameInfo", sendGetGameInfo, BODY_DTO(Object<DTO_SPACE::GetGameInfoDTO>, getgameinfo))
             API_CALL("POST", "TradeAPI/GetUserInfo", sendGetUserInfo, BODY_DTO(Object<DTO_SPACE::GetUserInfoDTO>, getuserinfo))
             API_CALL("POST", "TradeAPI/GetInstrumentInfo", sendGetInstrumentInfo, BODY_DTO(Object<DTO_SPACE::GetInstrumentInfoDTO>, getinstrumentinfo))
-            API_CALL("POST", "TradeAPI/GetActiveOrder", sendGetActiveOrder, BODY_DTO(Object<DTO_SPACE::GetActiveOrderDTO>, getactiveor
+            API_CALL("POST", "TradeAPI/GetActiveOrder", sendGetActiveOrder, BODY_DTO(Object<DTO_SPACE::GetActiveOrderDTO>, getactiveor))
             #include OATPP_CODEGEN_END(ApiClient)
     };
 }
