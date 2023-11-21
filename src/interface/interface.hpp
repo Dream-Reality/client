@@ -61,22 +61,22 @@ namespace INTERFACE_SPACE{
         auto response = client->sendCancel(cancel)->readBodyToDto<oatpp::Object<DTO_SPACE::CancelResponseDTO>>(objectMapper);
         return response;
     }
-    DTO_SPACE::GetLimitOrderBookResponseDTO::Wrapper sendGetLimitOrderBook(
+    DTO_SPACE::GetLOBResponseDTO::Wrapper sendGetLimitOrderBook(
         std::string token_ub,
         std::string instrument
     ){
-        auto getlob = DTO_SPACE::GetLimitOrderBookDTO::createShared();
+        auto getlob = DTO_SPACE::GetLOBDTO::createShared();
         getlob->token_ub = token_ub;
         getlob->instrument = instrument;
-        auto response = client->sendGetLimitOrderBook(getlob)->readBodyToDto<oatpp::Object<DTO_SPACE::GetLimitOrderBookResponseDTO>>(objectMapper);
+        auto response = client->sendGetLimitOrderBook(getlob)->readBodyToDto<oatpp::Object<DTO_SPACE::GetLOBResponseDTO>>(objectMapper);
         return response;
     }
-    DTO_SPACE::GetPrivateInfoResponseDTO::Wrapper sendGetPrivateInfo(
+    DTO_SPACE::GetUserInfoResponseDTO::Wrapper sendGetUserInfo(
         std::string token_ub
     ){
-        auto getprivateinfo = DTO_SPACE::GetPrivateInfoDTO::createShared();
-        getprivateinfo->token_ub = token_ub;
-        auto response = client->sendGetPrivateInfo(getprivateinfo)->readBodyToDto<oatpp::Object<DTO_SPACE::GetPrivateInfoResponseDTO>>(objectMapper);
+        auto getuserinfo = DTO_SPACE::GetUserInfoDTO::createShared();
+        getuserinfo->token_ub = token_ub;
+        auto response = client->sendGetUserInfo(getuserinfo)->readBodyToDto<oatpp::Object<DTO_SPACE::GetUserInfoResponseDTO>>(objectMapper);
         return response;
     }
     DTO_SPACE::GetGameInfoResponseDTO::Wrapper sendGetGameInfo(
@@ -93,6 +93,25 @@ namespace INTERFACE_SPACE{
         auto getinstrumentinfo = DTO_SPACE::GetInstrumentInfoDTO::createShared();
         getinstrumentinfo->token_ub = token_ub;
         auto response = client->sendGetInstrumentInfo(getinstrumentinfo)->readBodyToDto<oatpp::Object<DTO_SPACE::GetInstrumentInfoResponseDTO>>(objectMapper);
+        return response;
+    }
+
+    oatpp::Object<DTO_SPACE::GetTradeResponseDTO> sendGetTrade(
+        std::string token_ub,
+        std::string instrument_name
+    ){
+        auto gettrade = DTO_SPACE::GetTradeDTO::createShared();
+        gettrade->token_ub = token_ub;
+        gettrade->instrument_name = instrument_name;
+        auto response = client->sendGetTrade(gettrade)->readBodyToDto<oatpp::Object<DTO_SPACE::GetTradeResponseDTO>>(objectMapper);
+        return response;
+    }
+    oatpp::Object<DTO_SPACE::GetActiveOrderResponseDTO> sendGetActiveOrder(
+        std::string token_ub
+    ){
+        auto getactiveorder = DTO_SPACE::GetActiveOrderDTO::createShared();
+        getactiveorder->token_ub = token_ub;
+        auto response = client->sendGetActiveOrder(getactiveorder)->readBodyToDto<oatpp::Object<DTO_SPACE::GetActiveOrderResponseDTO>>(objectMapper);
         return response;
     }
 };
