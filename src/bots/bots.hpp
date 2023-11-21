@@ -45,6 +45,7 @@ namespace BOTS_SPACE{
         }
         void init(){
             /*交易开始前初始化交易状态,不需要修改。*/
+            day = 0;
             auto getgameinfo_response = INTERFACE_SPACE::sendGetGameInfo(token_ub);
             LOG_REPONSE(getgameinfo_response);
             start_time = UTIL_SPACE::ConvertToTimePoint_s(getgameinfo_response->next_game_start_time);
@@ -64,7 +65,7 @@ namespace BOTS_SPACE{
             /*盘中交易实时调用的自动化交易策略,以下为一个autotrader demo。*/
             auto LimitOrderBook = INTERFACE_SPACE::sendGetLimitOrderBook(token_ub, "UBIQ000"); // 获取当前UBIQ000的LOB行情。
             // LOG_REPONSE(LimitOrderBook); // 将LOB输出。
-            double askprice_1 = LimitOrderBook->askprice[0]; // 获取当前最优ask报价
+            double askprice_1 = LimitOrderBook->lob->askprice[0]; // 获取当前最优ask报价
             auto order_response = INTERFACE_SPACE::sendOrder(token_ub, "UBIQ000", 0, "buy", askprice_1, 100); // 用最优报价去买100单。
             LOG_REPONSE(order_response); // 将订单信息输出。
 
