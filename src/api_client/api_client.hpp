@@ -13,12 +13,14 @@ namespace oatpp { namespace consul { namespace rest {
             #include OATPP_CODEGEN_BEGIN(ApiClient)
             API_CLIENT_INIT(MessageClient)
             API_CALL("POST", "Login", sendLogin, BODY_DTO(Object<DTO_SPACE::LoginDTO>, login))
-            API_CALL("POST", "Order", sendOrder, BODY_DTO(Object<DTO_SPACE::OrderDTO>, order))
-            API_CALL("POST", "Cancel", sendCancel, BODY_DTO(Object<DTO_SPACE::CancelDTO>, cancel))
-            API_CALL("POST", "Info/Game/GetGameInfo", sendGetGameInfo, BODY_DTO(Object<DTO_SPACE::GetGameInfoDTO>, getgameinfo))
-            API_CALL("POST", "Info/LOB/GetLimitOrderBook", sendGetLimitOrderBook, BODY_DTO(Object<DTO_SPACE::GetLimitOrderBookDTO>, getlob))
-            API_CALL("POST", "Info/Instrument/GetInstrumentInfo", sendGetInstrumentInfo, BODY_DTO(Object<DTO_SPACE::GetInstrumentInfoDTO>, getinstrumentinfo))
-            API_CALL("POST", "Info/User/PrivateInfo", sendGetPrivateInfo, BODY_DTO(Object<DTO_SPACE::GetPrivateInfoDTO>, getprivateinfo))
+            API_CALL("POST", "TradeAPI/Order", sendOrder, BODY_DTO(Object<DTO_SPACE::OrderDTO>, order))
+            API_CALL("POST", "TradeAPI/Cancel", sendCancel, BODY_DTO(Object<DTO_SPACE::CancelDTO>, cancel))
+            API_CALL("POST", "TradeAPI/GetTrade", sendGetTrade, BODY_DTO(Object<DTO_SPACE::GetTradeDTO>, gettrade))
+            API_CALL("POST", "TradeAPI/GetLimitOrderBook", sendGetLimitOrderBook, BODY_DTO(Object<DTO_SPACE::GetLOBDTO>, getlob))
+            API_CALL("POST", "TradeAPI/GetGameInfo", sendGetGameInfo, BODY_DTO(Object<DTO_SPACE::GetGameInfoDTO>, getgameinfo))
+            API_CALL("POST", "TradeAPI/GetUserInfo", sendGetUserInfo, BODY_DTO(Object<DTO_SPACE::GetUserInfoDTO>, getuserinfo))
+            API_CALL("POST", "TradeAPI/GetInstrumentInfo", sendGetInstrumentInfo, BODY_DTO(Object<DTO_SPACE::GetInstrumentInfoDTO>, getinstrumentinfo))
+            API_CALL("POST", "TradeAPI/GetActiveOrder", sendGetActiveOrder, BODY_DTO(Object<DTO_SPACE::GetActiveOrderDTO>, getactiveor
             #include OATPP_CODEGEN_END(ApiClient)
     };
 }
